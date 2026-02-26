@@ -1,3 +1,4 @@
+import os
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import (
@@ -9,7 +10,7 @@ from flask_login import (
 app = Flask(__name__)
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_SECURE"] = False
-app.config["SECRET_KEY"] = "secret123"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "devkey")
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///expenses.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
