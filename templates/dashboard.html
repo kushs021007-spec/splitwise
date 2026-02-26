@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+body{font-family:Arial;background:#f4f6f8;margin:0;}
+.topbar{background:#343a40;color:white;padding:15px;text-align:right;}
+.container{width:900px;margin:auto;}
+.card{background:white;margin-top:20px;padding:20px;border-radius:10px;}
+.expense{background:#eee;padding:10px;margin:6px 0;border-radius:6px;}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+Welcome {{ user.username }} |
+<a href="/logout" style="color:white;">Logout</a>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h2>Add Expense</h2>
+
+<form action="/add" method="POST">
+
+<input name="desc" placeholder="Description" required><br>
+<input type="number" step="0.01" name="amount" placeholder="Amount" required>
+
+<h4>Split Between:</h4>
+
+{% for u in users %}
+<label>
+<input type="checkbox" name="split_users" value="{{u.id}}" checked>
+{{u.username}}
+</label><br>
+{% endfor %}
+
+<button>Add Expense</button>
+</form>
+</div>
+
+<div class="card">
+<h2>Expenses</h2>
+{% for e in expenses %}
+<div class="expense">
+{{e.description}} ₹{{e.amount}}
+(Paid by {{e.payer.username}})
+<a href="/delete/{{e.id}}">❌</a>
+</div>
+{% endfor %}
+</div>
+
+<div class="card">
+<h2>Settlements</h2>
+{% for s in settlements %}
+<div class="expense">{{s}}</div>
+{% endfor %}
+</div>
+
+</div>
+</body>
+</html>
