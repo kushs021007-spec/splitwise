@@ -7,6 +7,8 @@ from flask_login import (
 )
 
 app = Flask(__name__)
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_SECURE"] = False
 app.config["SECRET_KEY"] = "secret123"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///expenses.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -182,4 +184,4 @@ with app.app_context():
     db.create_all()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)
